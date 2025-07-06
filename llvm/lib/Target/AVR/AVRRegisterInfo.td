@@ -184,12 +184,19 @@ def DLDREGS : RegisterClass<"AVR", [i16], 8,
 
 // 16-bit register class for the adiw/sbiw instructions.
 def IWREGS : RegisterClass<"AVR", [i16], 8,
-                           (// Return value and arguments.
-                            add R25R24,
-                            // Scratch registers.
-                            R31R30, R27R26,
+                           (
+                            add R31R30, R27R26,
                             // Callee saved registers.
-                            R29R28)>;
+                            R29R28,
+                            // Return value and arguments.
+                            R25R24 //,
+                            // Scratch registers.
+                            //R31R30, R27R26
+                            )>;
+/*
+def PRIOREGS : RegisterClass<"AVR", [i16], 8,
+                             (add R25R24)>; { let CopyCost = 3; }
+*/
 
 // 16-bit register class for the ld and st instructions.
 // AKA X,Y, and Z

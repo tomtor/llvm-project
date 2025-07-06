@@ -84,9 +84,25 @@ BitVector AVRRegisterInfo::getReservedRegs(const MachineFunction &MF) const {
   // TODO: Write a pass to enumerate functions which reserved the Y register
   //       but didn't end up needing a frame pointer. In these, we can
   //       convert one or two of the spills inside to use the Y register.
+#if 0
   Reserved.set(AVR::R28);
   Reserved.set(AVR::R29);
   Reserved.set(AVR::R29R28);
+#else
+#if 1
+  if (MF.getSubtarget<AVRSubtarget>().hasTinyEncoding() 
+  || MF.getRegInfo().getNumVirtRegs() > 14) {
+    Reserved.set(AVR::R28);
+    Reserved.set(AVR::R29);
+    Reserved.set(AVR::R29R28);
+    //dbgs() << MF.getRegInfo().getNumVirtRegs() << " ";
+    //dbgs() << MF.getName() << "?\n";
+  } else {
+    //dbgs() << MF.getRegInfo().getNumVirtRegs() << " ";
+    //dbgs() << MF.getName() << "!\n";
+  }
+#endif
+#endif
 
   return Reserved;
 }
@@ -294,7 +310,8 @@ AVRRegisterInfo::getPointerRegClass(const MachineFunction &MF,
   // FIXME: Currently we're using avr-gcc as reference, so we restrict
   // ptrs to Y and Z regs. Though avr-gcc has buggy implementation
   // of memory constraint, so we can fix it and bit avr-gcc here ;-)
-  return &AVR::PTRDISPREGSRegClass;
+  //return &AVR::PTRDISPREGSRegClass;
+  return &AVR::PTRREGSRegClass;
 }
 
 void AVRRegisterInfo::splitReg(Register Reg, Register &LoReg,
