@@ -245,7 +245,8 @@ void AVRAsmPrinter::emitXXStructor(const DataLayout &DL, const Constant *CV) {
 bool AVRAsmPrinter::doFinalization(Module &M) {
   const TargetLoweringObjectFile &TLOF = getObjFileLowering();
   const AVRTargetMachine &TM = (const AVRTargetMachine &)MMI->getTarget();
-  const AVRSubtarget *SubTM = (const AVRSubtarget *)TM.getSubtargetImpl();
+  //const AVRSubtarget *SubTM = (const AVRSubtarget *)TM.getSubtargetImpl();
+  //const AVRSubtarget *SubTM = &MF->getSubtarget<AVRSubtarget>();
 
   bool NeedsCopyData = false;
   bool NeedsClearBSS = false;
@@ -263,7 +264,7 @@ bool AVRAsmPrinter::doFinalization(Module &M) {
     auto *Section = static_cast<MCSectionELF *>(TLOF.SectionForGlobal(&GO, TM));
     if (Section->getName().starts_with(".data"))
       NeedsCopyData = true;
-    else if (Section->getName().starts_with(".rodata") && SubTM->hasLPM())
+    else if (Section->getName().starts_with(".rodata")) // FIXME && SubTM->hasLPM())
       // AVRs that have a separate program memory (that's most AVRs) store
       // .rodata sections in RAM.
       NeedsCopyData = true;
@@ -294,8 +295,11 @@ bool AVRAsmPrinter::doFinalization(Module &M) {
 
 void AVRAsmPrinter::emitStartOfAsmFile(Module &M) {
   const AVRTargetMachine &TM = (const AVRTargetMachine &)MMI->getTarget();
-  const AVRSubtarget *SubTM = (const AVRSubtarget *)TM.getSubtargetImpl();
-  if (!SubTM)
+  //const AVRSubtarget *SubTM = (const AVRSubtarget *)TM.getSubtargetImpl();
+  const AVRSubtarget *SubTM = &MF->getSubtarget<AVRSubtarget>();
+    //const AVRSubtarget &STI = MF->getSubtarget<AVRSubtarget>();
+    // const TargetRegisterInfo &TRI = *STI.getRegisterInfo();
+  //if (!SubTM) // FIXME
     return;
 
   // Emit __tmp_reg__.

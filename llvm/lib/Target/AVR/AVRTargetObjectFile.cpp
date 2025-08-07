@@ -42,6 +42,7 @@ MCSection *AVRTargetObjectFile::SelectSectionForGlobal(
   if (AVR::isProgramMemoryAddress(GO) && !GO->hasSection() &&
       Kind.isReadOnly()) {
     // The AVR subtarget should support LPM to access section '.progmem*.data'.
+#if 0 // FIXME
     if (!AVRTM.getSubtargetImpl()->hasLPM()) {
       // TODO: Get the global object's location in source file.
       getContext().reportError(
@@ -59,6 +60,7 @@ MCSection *AVRTargetObjectFile::SelectSectionForGlobal(
                                "accessing extended program memory");
       return ProgmemDataSection;
     }
+#endif
     switch (AVR::getAddressSpace(GO)) {
     case AVR::ProgramMemory: // address space 1
       return ProgmemDataSection;

@@ -148,9 +148,12 @@ bool AVRRegisterInfo::eliminateFrameIndex(MachineBasicBlock::iterator II,
   MachineBasicBlock &MBB = *MI.getParent();
   const MachineFunction &MF = *MBB.getParent();
   const AVRTargetMachine &TM = (const AVRTargetMachine &)MF.getTarget();
-  const TargetInstrInfo &TII = *TM.getSubtargetImpl()->getInstrInfo();
+  //const TargetInstrInfo &TII = *TM.getSubtargetImpl()->getInstrInfo();
+  const AVRSubtarget *SubTM = &MF.getSubtarget<AVRSubtarget>();
+  const TargetInstrInfo &TII = *SubTM->getInstrInfo();
   const MachineFrameInfo &MFI = MF.getFrameInfo();
-  const TargetFrameLowering *TFI = TM.getSubtargetImpl()->getFrameLowering();
+  //const TargetFrameLowering *TFI = TM.getSubtargetImpl()->getFrameLowering();
+  const TargetFrameLowering *TFI = SubTM->getFrameLowering();
   const AVRSubtarget &STI = MF.getSubtarget<AVRSubtarget>();
   int FrameIndex = MI.getOperand(FIOperandNum).getIndex();
   int Offset = MFI.getObjectOffset(FrameIndex);

@@ -102,9 +102,11 @@ extern "C" LLVM_ABI LLVM_EXTERNAL_VISIBILITY void LLVMInitializeAVRTarget() {
   initializeAVRDAGToDAGISelLegacyPass(PR);
 }
 
+#if 0
 const AVRSubtarget *AVRTargetMachine::getSubtargetImpl() const {
   return &SubTarget;
 }
+#endif
 
 const AVRSubtarget *AVRTargetMachine::getSubtargetImpl(const Function &) const {
   return &SubTarget;

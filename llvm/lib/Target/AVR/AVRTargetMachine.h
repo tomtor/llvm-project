@@ -35,8 +35,12 @@ public:
                    std::optional<CodeModel::Model> CM, CodeGenOptLevel OL,
                    bool JIT);
 
-  const AVRSubtarget *getSubtargetImpl() const;
+  //const AVRSubtarget *getSubtargetImpl() const;
   const AVRSubtarget *getSubtargetImpl(const Function &) const override;
+  // DO NOT IMPLEMENT: There is no such thing as a valid default subtarget,
+  // subtargets are per-function entities based on the target-specific
+  // attributes of each function.
+  const AVRSubtarget *getSubtargetImpl() const = delete;
 
   TargetLoweringObjectFile *getObjFileLowering() const override {
     return this->TLOF.get();
