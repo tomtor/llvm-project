@@ -138,6 +138,7 @@ bool AVRPassConfig::addInstSelector() {
 void AVRPassConfig::addPreSched2() { addPass(createAVRExpandPseudoPass()); }
 
 void AVRPassConfig::addPreEmitPass() {
+  addPass(createAVRPeepholePass());
   // Must run branch selection immediately preceding the asm printer.
   addPass(&BranchRelaxationPassID);
 }

@@ -28,12 +28,14 @@ class PassRegistry;
 Pass *createAVRShiftExpandPass();
 FunctionPass *createAVRISelDag(AVRTargetMachine &TM, CodeGenOptLevel OptLevel);
 FunctionPass *createAVRExpandPseudoPass();
+FunctionPass *createAVRPeepholePass();
 FunctionPass *createAVRFrameAnalyzerPass();
 FunctionPass *createAVRBranchSelectionPass();
 
 void initializeAVRAsmPrinterPass(PassRegistry &);
 void initializeAVRDAGToDAGISelLegacyPass(PassRegistry &);
 void initializeAVRExpandPseudoPass(PassRegistry &);
+void initializeAVRPeepholePass(PassRegistry &);
 void initializeAVRShiftExpandPass(PassRegistry &);
 
 /// Contains the AVR backend.
