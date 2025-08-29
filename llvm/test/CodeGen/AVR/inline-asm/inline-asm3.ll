@@ -184,7 +184,6 @@ define void @add_b_i8(i8 signext %0, i8 signext %1) {
 ; CHECK:       ; %bb.0:
 ; CHECK-NEXT:    mov r20, r22
 ; CHECK-NEXT:    mov r22, r24
-; CHECK-NEXT:    mov r24, r22
 ; CHECK-NEXT:    clr r25
 ; CHECK-NEXT:    mov r30, r24
 ; CHECK-NEXT:    mov r31, r25
@@ -293,7 +292,6 @@ define void @add_w_i8(i8 signext %0, i8 signext %1) {
 ; CHECK:       ; %bb.0:
 ; CHECK-NEXT:    mov r20, r22
 ; CHECK-NEXT:    mov r22, r24
-; CHECK-NEXT:    mov r24, r22
 ; CHECK-NEXT:    clr r25
 ; CHECK-NEXT:    mov r30, r20
 ; CHECK-NEXT:    clr r31

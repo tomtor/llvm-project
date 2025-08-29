@@ -30,7 +30,6 @@ define i16 @mult16(i16 %a, i16 %b) {
 ; CHECK-NEXT:    mov r24, r0
 ; CHECK-NEXT:    add r24, r19
 ; CHECK-NEXT:    mov r20, r24
-; CHECK-NEXT:    clr r21
 ; CHECK-NEXT:    mov r21, r20
 ; CHECK-NEXT:    clr r20
 ; CHECK-NEXT:    mov r24, r18
