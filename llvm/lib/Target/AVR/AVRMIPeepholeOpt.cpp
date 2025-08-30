@@ -16,15 +16,13 @@
 #include "MCTargetDesc/AVRMCTargetDesc.h"
 
 #include "llvm/CodeGen/MachineFunctionPass.h"
-#include "llvm/CodeGen/MachineInstrBuilder.h"
-#include "llvm/CodeGen/MachineRegisterInfo.h"
 #include "llvm/CodeGen/TargetRegisterInfo.h"
 
 #include "AVRGenInstrInfo.inc"
 
 using namespace llvm;
 
-#define AVR_PEEP_HOLE_NAME "AVR peep hole optimization pass"
+#define AVR_PEEPHOLE_NAME "AVR peephole optimization pass"
 
 namespace {
 
@@ -37,14 +35,11 @@ public:
 
   bool runOnMachineFunction(MachineFunction &MF) override;
 
-  StringRef getPassName() const override { return AVR_PEEP_HOLE_NAME; }
+  StringRef getPassName() const override { return AVR_PEEPHOLE_NAME; }
 
 private:
   typedef MachineBasicBlock Block;
   typedef Block::iterator BlockIt;
-
-  const AVRRegisterInfo *TRI;
-  const TargetInstrInfo *TII;
 
   bool inspectMBB(Block &MBB);
   template <unsigned OP> bool inspect(Block &MBB, BlockIt MBBI);
@@ -115,7 +110,7 @@ bool AVRPeephole::runOnMachineFunction(MachineFunction &MF) {
 
 } // end of namespace llvm
 
-INITIALIZE_PASS(AVRPeephole, "avr-peep-hole", AVR_PEEP_HOLE_NAME,
+INITIALIZE_PASS(AVRPeephole, "avr-peephole", AVR_PEEPHOLE_NAME,
                 false, false)
 
 FunctionPass *llvm::createAVRPeepholePass() {
